@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>button demo</title>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+    {% load static %}
+    <button>Добавить задачу</button>
+    <hr>
+    <a href="{% url 'status_page' %}">Просмотреть список заданий</a>
+<div></div>
+
+<script>
+$('button').on('click', function() {
+   $.ajax({
+            type: "GET",
+            url: "{% url 'task_add' %}",
+            dataType: 'json',
+            cache: false,
+            success: function(data){
+                    //location.href = "{% url 'status_page' %}";
+            }
+        });
+});
+</script>
+
+</body>
+</html>

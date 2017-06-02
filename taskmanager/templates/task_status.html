@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta http-equiv="Content-Type" content="text/html; Charset=UTF-8">
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <title>Title</title>
+</head>
+<body>
+<div class="results"></div>
+
+<script>
+    function show()
+    {
+        $.ajax({
+            type: "GET",
+            url: "{% url 'task_status' %}",
+            dataType: 'json',
+            cache: false,
+            success: function(data){
+                $(".results").html(" ")
+                $.each(data.result, function(index, element) {
+                    $(".results").append(
+                            "<br>"+"ID ="+element.id+
+                            " || "+
+                            "Status = " + element.status+
+                            " || "+
+                            "Start time = "+element.create_time+
+                            " || "+
+                            "Finish time = "+element.finish_time+
+                            "<hr>"
+                    );
+                });
+            }
+        });
+    }
+    $(document).ready(function(){
+        show();
+        setInterval('show()',2500);
+    });
+</script>
+
+</body>
+</html>
